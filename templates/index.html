@@ -1,0 +1,61 @@
+
+<html>
+<head>
+<title>Projet 8 API locale: Anthony RENARD</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />     
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+<p><h1 align="center">Détection des élements autour de la voiture autonome</h1></p>
+<div class="container">
+<div class="row">
+    <h2>Sélectionner une photo d'un paysage urbain</h2>
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+    <h5>Photo réelle prise par la voiture :</h5>
+    {% if filename %}
+        <div>
+            <img height="144" width="288" src="{{ url_for('display_image', filename=filename) }}">
+        </div>
+    {% endif %}
+    <h5>Masque original 30 classes :</h5>
+    {% if name_mask_real_deduite %}
+        <div>
+            <img height="144" width="288" src="{{ url_for('display_real_mask', name_mask_real_deduite=name_mask_real_deduite) }}">
+        </div>
+    {% endif %}
+    <h5>Masque original 8 catégories :</h5>
+    {% if name_mask8_real_deduite %}
+        <div>
+            <img height="144" width="288" src="{{ url_for('display_real_mask8', name_mask8_real_deduite=name_mask8_real_deduite) }}">
+        </div>
+    {% endif %}
+    <h5>Masque 8 catégories prédit par le modèle:</h5>
+    {% if mask_filename %}
+        <div>
+            <img src="{{ url_for('display_mask', mask_filename=mask_filename) }}">
+        </div>
+    {% endif %}
+    <form method="post" action="/" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input type="file" name="file" class="form-control" autocomplete="off" required>
+            </p>
+        </dl>
+        <p>
+            <input type="submit" value="Créer masque" class="btn btn-info">
+        </p>
+    </form>
+</div>
+</div>
+</body>
+</html>
