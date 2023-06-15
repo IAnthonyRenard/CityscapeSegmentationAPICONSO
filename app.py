@@ -58,7 +58,7 @@ def upload_image():
                     print("chemin complet",mask_real_path)
                     
                     #Copie du masque prédit dans le dossier static
-                    shutil.copy(mask_real_path, 'static/uploads/')
+                    #shutil.copy(mask_real_path, 'static/uploads/')
                     
                     #mask_real_path.save('static/uploads/mask_real_image.png')
                     #mask_real= cv2.imread(mask_real_path)
@@ -83,7 +83,7 @@ def upload_image():
                     print("chemin complet",mask8_real_path)
                     
                     #Copie du masque prédit dans le dossier static
-                    shutil.copy(mask8_real_path, 'static/uploads/')
+                    #shutil.copy(mask8_real_path, 'static/uploads/')
                     
                     #Colorisation du masque 8 cats
                     mask8_test = mask8_real_path
