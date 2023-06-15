@@ -46,7 +46,7 @@ def upload_image():
         name_mask_real_deduite = filename.replace('leftImg8bit', "gtFine_color")
         #print(name_mask_real)
         
-        for root, dirs, files in os.walk(FOLDER_VALIDATION_MASK):
+        for root, dirs, files in os.walk(UPLOAD_FOLDER):#FOLDER_VALIDATION_MASK
             for real_mask_input in files:
                 if real_mask_input == name_mask_real_deduite:
                     print("boucle file",real_mask_input)
@@ -71,7 +71,7 @@ def upload_image():
         name_mask8_real_deduite = filename.replace('leftImg8bit', "gtFine_labelIds")
         #print(name_mask_real)
         
-        for root, dirs, files in os.walk(FOLDER_VALIDATION_MASK):
+        for root, dirs, files in os.walk(UPLOAD_FOLDER):
             for real_mask8_input in files:
                 if real_mask8_input == name_mask8_real_deduite:
                     print("boucle file",real_mask8_input)
