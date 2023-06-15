@@ -1,6 +1,5 @@
 #app.py
 from flask import Flask, flash, request, redirect, url_for, render_template
-#import urllib.request
 import os
 from werkzeug.utils import secure_filename
 import pipeline
@@ -9,12 +8,7 @@ import numpy as np
 import shutil
 import cv2
 
-#import glob
-#from pathlib import Path
 
-
-FOLDER_VALIDATION_MASK   = "C:/Users/Utilisateur/PROJET8/input/P8_Cityscapes_gtFine_trainvaltest/gtFine"
-#FOLDER_VALIDATION_MASK   = "https://drive.google.com/drive/folders/1F1kw_8vWMxurak4wqUMTbKYf9Lxaeqgs?hl=fr"
 
 app = Flask(__name__)
  
@@ -104,8 +98,8 @@ def upload_image():
         ######################### FIN RECHERCHE DU MASQUE REEL 8 cats ########################################  
         
         #########################PREDICTION DU MASQUE################################################
-        #image ="C:/Users/Utilisateur/PROJET8/input/P8_Cityscapes_leftImg8bit_trainvaltest/leftImg8bit/val/munster/munster_000034_000019_leftImg8bit.png"
-        image='C:/Users/Utilisateur/PROJET8/api_locale/static/uploads/' + filename
+        image=UPLOAD_FOLDER + filename
+        
         #print(image)
         mask_t=pipeline.affichage_model_result(image)
         init_img = Image.fromarray((mask_t * 255).astype(np.uint8))
@@ -114,11 +108,10 @@ def upload_image():
         print('nom mask: ' + mask_filename)
 
         
-        #flash('Voici la vue prise par la voiture, le masque de segmentation original et le masque de ségmentation prédit associé')
+        
         flash(filename)
         print(filename)
-        print(name_mask_real_deduite)
-        print(mask_filename)
+        #print(mask_filename)
         return render_template('index.html', filename=filename, name_mask_real_deduite=name_mask_real_deduite, name_mask8_real_deduite=name_mask8_real_deduite,mask_filename=mask_filename)
         #########################FINPREDICTION DU MASQUE################################################
     
