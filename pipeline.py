@@ -10,7 +10,7 @@ from matplotlib import colors
 
 
 # Chargement du modèle
-loaded_model_from_h5 = keras.models.load_model('C:/Users/Utilisateur/PROJET8/best_model/mymodel.h5',custom_objects={'dice_loss': dice_loss, 'jaccard_loss': jaccard_loss, 'precision': precision, 'recall': recall,'f1-score': f1_score})
+loaded_model_from_h5 = keras.models.load_model('best_model/mymodel.h5',custom_objects={'dice_loss': dice_loss, 'jaccard_loss': jaccard_loss, 'precision': precision, 'recall': recall,'f1-score': f1_score})
 
 
 id2category={0: 'void', 1: 'flat', 2: 'construction', 3: 'object', 4: 'nature', 5: 'sky', 6: 'human', 7: 'vehicle'}
