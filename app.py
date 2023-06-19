@@ -1,12 +1,17 @@
 #app.py
-from flask import Flask, flash, request, redirect, url_for, render_template
+from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
+import requests
 import os
 from werkzeug.utils import secure_filename
-import pipeline
+#import pipeline
 from PIL import Image
 import numpy as np
 import shutil
 import cv2
+import urllib.request
+import io
+from PIL import Image
+
 
 
 
@@ -96,22 +101,43 @@ def upload_image():
             
             
         ######################### FIN RECHERCHE DU MASQUE REEL 8 cats ########################################  
-        
+
         #########################PREDICTION DU MASQUE################################################
         image=UPLOAD_FOLDER + filename
         
-        #print(image)
-        mask_t=pipeline.affichage_model_result(image)
-        init_img = Image.fromarray((mask_t * 255).astype(np.uint8))
-        init_img.save('static/uploads/mask_image.png')
+        #mask_t=pipeline.affichage_model_result(image)
+        url="https://cityscapesegmentation.herokuapp.com/predictapp2"
+        #url="http://127.0.0.1:5001/predictapp2"
+        
+        with open(image, "rb") as image_file: 
+            files = {"image": image_file}
+            response = requests.get(url, files=files)
+        
+        
+        '''reponse= requests.get(url, filename)
+        print("Reponse requête",reponse.url)'''
+        
+        
+        if response.status_code == 200:
+            image_data = response.content
+            image = Image.open(io.BytesIO(image_data))
+            image.save("static/uploads/mask_image.png")
+           
+            print("Image successfully received.")
+        else:
+            print("Failed to receive image.")
+        
+        
         mask_filename = 'mask_image.png'
         print('nom mask: ' + mask_filename)
 
         
         
         flash(filename)
-        print(filename)
+        #print(filename)
+        
         #print(mask_filename)
+        
         return render_template('index.html', filename=filename, name_mask_real_deduite=name_mask_real_deduite, name_mask8_real_deduite=name_mask8_real_deduite,mask_filename=mask_filename)
         #########################FINPREDICTION DU MASQUE################################################
     
@@ -142,4 +168,4 @@ def display_mask(mask_filename):
     return redirect(url_for('static', filename='uploads/' + mask_filename), code=301)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='127.0.0.1',port=5002)
